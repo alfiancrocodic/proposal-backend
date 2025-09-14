@@ -1,0 +1,159 @@
+openapi: 3.0.3
+info:
+  title: Proposal Backend API
+  version: 0.1.0
+servers:
+  - url: http://127.0.0.1:8000
+paths:
+  /api/proposal/templates:
+    get:
+      summary: Get active proposal templates (complex + simple)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateResponse'
+  /api/proposals/{proposal}/content:
+    get:
+      summary: Get proposal content snapshot
+      parameters:
+        - name: proposal
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProposalContent'
+    put:
+      summary: Upsert proposal content snapshot
+      parameters:
+        - name: proposal
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/ProposalContent'
+      responses:
+        '200':
+          description: Saved
+  /api/projects/{id}/proposals:
+    get:
+      summary: List proposals by project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Create proposal for project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                version:
+                  type: string
+      responses:
+        '201':
+          description: Created
+components:
+  schemas:
+    TemplateResponse:
+      type: object
+      properties:
+        complex:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              title:
+                type: string
+              columns:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    key: { type: string }
+                    label: { type: string }
+                    input_type: { type: string }
+                    is_checkable: { type: boolean }
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    values:
+                      type: object
+              footnotes:
+                type: array
+                items: { type: string }
+        simple:
+          type: object
+          properties:
+            frontend_lang: { $ref: '#/components/schemas/SimpleList' }
+            app_info: { $ref: '#/components/schemas/SimpleList' }
+            account_availability: { $ref: '#/components/schemas/SimpleList' }
+            db_availability: { $ref: '#/components/schemas/SimpleList' }
+            db_info: { $ref: '#/components/schemas/SimpleList' }
+    SimpleList:
+      type: array
+      items:
+        type: object
+        properties:
+          label: { type: string }
+          is_other: { type: boolean }
+    ProposalContent:
+      type: object
+      properties:
+        systemEnvironment:
+          type: object
+          properties:
+            mobile:
+              type: object
+            web:
+              type: object
+            simple:
+              type: object
+        featureSales:
+          type: array
+          items: { type: object }
+        featureAdmin:
+          type: array
+          items: { type: object }
+        financialBreakdown:
+          type: array
+          items: { type: object }
+        termsOfPayment:
+          type: array
+          items: { type: object }
+        termsAndConditions:
+          type: array
+          items: { type: string }
+
