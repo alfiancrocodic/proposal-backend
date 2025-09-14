@@ -72,6 +72,49 @@ class ProposalTemplateSeeder extends Seeder
                 ProposalSimpleOption::firstOrCreate(['section_key'=>$key,'label'=>$label],[ 'sort_order'=>$i,'is_active'=>true,'is_other'=>str_contains($label,'Other') ]);
             }
         }
+
+        // Terms of Payment (complex)
+        $termsPayment = ProposalSection::firstOrCreate(
+            ['key' => 'terms_payment'],
+            ['title' => 'Terms of Payment', 'type' => 'complex', 'sort_order' => 3, 'is_active' => true]
+        );
+        $tpCols = [
+            ['key'=>'percentage','label'=>'Percentage (%)'],
+            ['key'=>'description','label'=>'Description'],
+            ['key'=>'total','label'=>'Total'],
+        ];
+        foreach ($tpCols as $i => $c) {
+            ProposalSectionColumn::firstOrCreate(
+                ['section_id'=>$termsPayment->id,'key'=>$c['key']],
+                ['label'=>$c['label'],'input_type'=>'text','sort_order'=>$i]
+            );
+        }
+        $defaultPayments = [
+            ['percentage'=>25, 'description'=>'On MOU signature', 'total'=>78823800],
+            ['percentage'=>25, 'description'=>'After planning completed', 'total'=>78823800],
+            ['percentage'=>40, 'description'=>'After build & review completed', 'total'=>78823800],
+            ['percentage'=>10, 'description'=>'After BAST submitted', 'total'=>78823800],
+        ];
+        foreach ($defaultPayments as $i => $row) {
+            ProposalSectionRow::firstOrCreate(['section_id'=>$termsPayment->id,'sort_order'=>$i+1], [ 'values' => $row ]);
+        }
+
+        // Terms & Conditions (complex)
+        $termsCond = ProposalSection::firstOrCreate(
+            ['key' => 'terms_conditions'],
+            ['title' => 'Terms & Conditions', 'type' => 'complex', 'sort_order' => 4, 'is_active' => true]
+        );
+        ProposalSectionColumn::firstOrCreate(
+            ['section_id'=>$termsCond->id,'key'=>'term'],
+            ['label'=>'Term', 'input_type'=>'textarea','sort_order'=>0]
+        );
+        $defaultTerms = [
+            'Total price exclude VAT 11%.',
+            'The total cost does not include the server rental fee.',
+            'The source code application is the property of the client.',
+        ];
+        foreach ($defaultTerms as $i => $term) {
+            ProposalSectionRow::firstOrCreate(['section_id'=>$termsCond->id,'sort_order'=>$i+1], [ 'values' => ['term'=>$term] ]);
+        }
     }
 }
-

@@ -17,12 +17,35 @@ class RowsRelationManager extends RelationManager
 
     public function form(Form $form): Form
     {
-        return $form->schema([
-            Forms\Components\KeyValue::make('values')
-                ->label('Values (by column key)')
-                ->reorderable()
-                ->addActionLabel('Add field')
-                ->columnSpanFull(),
+        return $form->schema($this->getFormSchema());
+    }
+
+    protected function getFormSchema(): array
+    {
+        $sectionKey = $this->getOwnerRecord()?->key;
+        $base = [
+            Forms\Components\Hidden::make('section_id')->default($this->getOwnerRecord()?->id),
+        ];
+        if ($sectionKey === 'terms_payment') {
+            $specific = [
+                Forms\Components\TextInput::make('values.percentage')->label('Percentage (%)')->numeric()->required(),
+                Forms\Components\Textarea::make('values.description')->label('Description')->rows(3)->required(),
+                Forms\Components\TextInput::make('values.total')->label('Total')->numeric()->required(),
+            ];
+        } elseif ($sectionKey === 'terms_conditions') {
+            $specific = [
+                Forms\Components\Textarea::make('values.term')->label('Term')->rows(4)->required(),
+            ];
+        } else {
+            $specific = [
+                Forms\Components\KeyValue::make('values')
+                    ->label('Values (by column key)')
+                    ->reorderable()
+                    ->addActionLabel('Add field')
+                    ->columnSpanFull(),
+            ];
+        }
+        return array_merge($base, $specific, [
             Forms\Components\TextInput::make('sort_order')->numeric()->default(0),
             Forms\Components\Toggle::make('is_active')->default(true),
         ]);
@@ -30,12 +53,26 @@ class RowsRelationManager extends RelationManager
 
     public function table(Table $table): Table
     {
-        return $table->columns([
+        $sectionKey = $this->getOwnerRecord()?->key;
+        $columns = [
             Tables\Columns\TextColumn::make('id'),
-            Tables\Columns\TextColumn::make('values.platform')->label('Platform')->limit(30),
-            Tables\Columns\TextColumn::make('sort_order')->sortable(),
-            Tables\Columns\IconColumn::make('is_active')->boolean(),
-        ])->headerActions([
+        ];
+        if ($sectionKey === 'terms_payment') {
+            $columns[] = Tables\Columns\TextColumn::make('values.percentage')->label('Percentage');
+            $columns[] = Tables\Columns\TextColumn::make('values.description')->label('Description')->limit(60);
+            $columns[] = Tables\Columns\TextColumn::make('values.total')->label('Total');
+        } elseif ($sectionKey === 'terms_conditions') {
+            $columns[] = Tables\Columns\TextColumn::make('values.term')->label('Term')->limit(80);
+        } else {
+            $columns[] = Tables\Columns\TextColumn::make('values.platform')->label('Platform')->limit(30);
+        }
+        $columns[] = Tables\Columns\TextColumn::make('sort_order')->sortable();
+        $columns[] = Tables\Columns\IconColumn::make('is_active')->boolean();
+
+        return $table
+            ->reorderable('sort_order')
+            ->columns($columns)
+            ->headerActions([
             Tables\Actions\CreateAction::make(),
         ])->actions([
             Tables\Actions\Action::make('copy')
