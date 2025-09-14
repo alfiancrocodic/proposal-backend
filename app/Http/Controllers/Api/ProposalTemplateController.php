@@ -44,7 +44,7 @@ class ProposalTemplateController extends Controller
                 'app_info'=> ($simple['app_info'] ?? collect())->map(fn($o)=>['label'=>$o->label])->values(),
                 'account_availability'=> ($simple['account_availability'] ?? collect())->map(fn($o)=>['label'=>$o->label])->values(),
                 'db_availability'=> ($simple['db_availability'] ?? collect())->map(fn($o)=>['label'=>$o->label])->values(),
-                'db_info'=> ($simple['db_info'] ?? collect())->map(fn($o)=>['label'=>$o->label])->values(),
+                'db_info'=> ($simple['db_info'] ?? collect())->map(fn($o)=>['label'=>$o->label,'is_other'=>(bool)$o->is_other])->values(),
             ]
         ]);
     }
