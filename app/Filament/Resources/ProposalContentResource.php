@@ -26,8 +26,11 @@ class ProposalContentResource extends Resource
                 Forms\Components\Select::make('proposal_id')
                     ->relationship('proposal', 'version')
                     ->required(),
-                Forms\Components\KeyValue::make('data')
-                    ->required(),
+                // Use JsonEditor to store arbitrary nested arrays/objects safely
+                Forms\Components\JsonEditor::make('data')
+                    ->label('Data (JSON)')
+                    ->nullable()
+                    ->columnSpanFull(),
             ]);
     }
 

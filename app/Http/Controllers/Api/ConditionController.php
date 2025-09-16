@@ -47,12 +47,12 @@ class ConditionController extends Controller
                 $query->where('is_active', $request->boolean('is_active'));
             }
             
-            // Search berdasarkan nama atau condition text
+            // Search berdasarkan nama atau deskripsi
             if ($request->filled('search')) {
                 $search = $request->search;
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'like', '%' . $search . '%')
-                      ->orWhere('condition_text', 'like', '%' . $search . '%');
+                      ->orWhere('description', 'like', '%' . $search . '%');
                 });
             }
             
@@ -93,7 +93,6 @@ class ConditionController extends Controller
                 'feature_id' => 'required|exists:features,id',
                 'name' => 'required|string|max:255',
                 'description' => 'nullable|string',
-                'condition_text' => 'required|string',
                 'is_active' => 'boolean',
                 'sort_order' => 'integer|min:0'
             ]);
@@ -195,7 +194,6 @@ class ConditionController extends Controller
                 'feature_id' => 'required|exists:features,id',
                 'name' => 'required|string|max:255',
                 'description' => 'nullable|string',
-                'condition_text' => 'required|string',
                 'is_active' => 'boolean',
                 'sort_order' => 'integer|min:0'
             ]);

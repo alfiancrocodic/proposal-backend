@@ -55,11 +55,6 @@ class ConditionResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull()
                     ->rows(3),
-                Forms\Components\Textarea::make('condition_text')
-                    ->label('Condition Text')
-                    ->columnSpanFull()
-                    ->rows(4)
-                    ->helperText('Masukkan kondisi atau syarat khusus untuk feature ini'),
                 Forms\Components\Toggle::make('is_active')
                     ->required(),
                 Forms\Components\TextInput::make('sort_order')
@@ -99,16 +94,7 @@ class ConditionResource extends Resource
                         return $state;
                     })
                     ->label('Deskripsi'),
-                Tables\Columns\TextColumn::make('condition_text')
-                    ->limit(50)
-                    ->tooltip(function (Tables\Columns\TextColumn $column): ?string {
-                        $state = $column->getState();
-                        if (strlen($state) <= 50) {
-                            return null;
-                        }
-                        return $state;
-                    })
-                    ->label('Kondisi'),
+                // Kolom condition_text dihapus; gunakan deskripsi bila perlu
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean()
                     ->label('Status Aktif'),

@@ -196,7 +196,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $infoPaymentFeature->id,
             'name' => 'Pembayaran Manual',
             'description' => 'Kondisi untuk pembayaran manual',
-            'condition_text' => 'Pembayaran dilakukan manual di bank atau agen ops',
             'is_active' => true,
             'sort_order' => 1
         ]);
@@ -232,7 +231,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $infoProsesUmrohFeature->id,
             'name' => 'Audit',
             'description' => 'Proses audit',
-            'condition_text' => 'Audit',
             'is_active' => true,
             'sort_order' => 1
         ]);
@@ -241,7 +239,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $infoProsesUmrohFeature->id,
             'name' => 'Deskripsi',
             'description' => 'Deskripsi proses',
-            'condition_text' => 'Deskripsi',
             'is_active' => true,
             'sort_order' => 2
         ]);
@@ -250,7 +247,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $infoProsesUmrohFeature->id,
             'name' => 'Image',
             'description' => 'Gambar proses',
-            'condition_text' => 'Image',
             'is_active' => true,
             'sort_order' => 3
         ]);
@@ -278,7 +274,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $infoProsesHajiFeature->id,
             'name' => 'Audit',
             'description' => 'Proses audit haji',
-            'condition_text' => 'Audit',
             'is_active' => true,
             'sort_order' => 1
         ]);
@@ -287,7 +282,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $infoProsesHajiFeature->id,
             'name' => 'Deskripsi',
             'description' => 'Deskripsi proses haji',
-            'condition_text' => 'Deskripsi',
             'is_active' => true,
             'sort_order' => 2
         ]);
@@ -296,7 +290,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $infoProsesHajiFeature->id,
             'name' => 'Image',
             'description' => 'Gambar proses haji',
-            'condition_text' => 'Image',
             'is_active' => true,
             'sort_order' => 3
         ]);
@@ -332,7 +325,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $infoMesjidIhramFeature->id,
             'name' => 'Nama Lokasi',
             'description' => 'Nama lokasi mesjid',
-            'condition_text' => 'Nama Lokasi',
             'is_active' => true,
             'sort_order' => 1
         ]);
@@ -341,7 +333,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $infoMesjidIhramFeature->id,
             'name' => 'Image',
             'description' => 'Gambar mesjid',
-            'condition_text' => 'Image',
             'is_active' => true,
             'sort_order' => 2
         ]);
@@ -350,7 +341,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $infoMesjidIhramFeature->id,
             'name' => 'Maps',
             'description' => 'Peta lokasi mesjid',
-            'condition_text' => 'Maps',
             'is_active' => true,
             'sort_order' => 3
         ]);
@@ -378,7 +368,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $doaMesjidIhramFeature->id,
             'name' => 'Ayat Quran',
             'description' => 'Ayat Al-Quran terkait',
-            'condition_text' => 'Ayat Quran',
             'is_active' => true,
             'sort_order' => 1
         ]);
@@ -387,7 +376,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $doaMesjidIhramFeature->id,
             'name' => 'Latin',
             'description' => 'Tulisan latin doa',
-            'condition_text' => 'Latin',
             'is_active' => true,
             'sort_order' => 2
         ]);
@@ -396,7 +384,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $doaMesjidIhramFeature->id,
             'name' => 'Terjemahan',
             'description' => 'Terjemahan doa',
-            'condition_text' => 'Terjemahan',
             'is_active' => true,
             'sort_order' => 3
         ]);
@@ -405,7 +392,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $doaMesjidIhramFeature->id,
             'name' => 'Audio Doa',
             'description' => 'Audio bacaan doa',
-            'condition_text' => 'Audio Doa',
             'is_active' => true,
             'sort_order' => 4
         ]);
@@ -433,7 +419,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $doaNiatUmrohFeature->id,
             'name' => 'Ayat Quran',
             'description' => 'Ayat Al-Quran untuk niat umroh',
-            'condition_text' => 'Ayat Quran',
             'is_active' => true,
             'sort_order' => 1
         ]);
@@ -442,7 +427,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $doaNiatUmrohFeature->id,
             'name' => 'Latin',
             'description' => 'Tulisan latin doa niat',
-            'condition_text' => 'Latin',
             'is_active' => true,
             'sort_order' => 2
         ]);
@@ -451,7 +435,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $doaNiatUmrohFeature->id,
             'name' => 'Terjemahan',
             'description' => 'Terjemahan doa niat',
-            'condition_text' => 'Terjemahan',
             'is_active' => true,
             'sort_order' => 3
         ]);
@@ -460,7 +443,6 @@ class FeatureModuleSeeder extends Seeder
             'feature_id' => $doaNiatUmrohFeature->id,
             'name' => 'Audio Doa',
             'description' => 'Audio bacaan doa niat',
-            'condition_text' => 'Audio Doa',
             'is_active' => true,
             'sort_order' => 4
         ]);

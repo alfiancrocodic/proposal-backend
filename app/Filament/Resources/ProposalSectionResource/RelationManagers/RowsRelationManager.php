@@ -37,13 +37,38 @@ class RowsRelationManager extends RelationManager
                 Forms\Components\Textarea::make('values.term')->label('Term')->rows(4)->required(),
             ];
         } else {
-            $specific = [
-                Forms\Components\KeyValue::make('values')
-                    ->label('Values (by column key)')
-                    ->reorderable()
-                    ->addActionLabel('Add field')
-                    ->columnSpanFull(),
-            ];
+            // Build inputs dynamically from the section's columns,
+            // mapping input types to appropriate components.
+            $specific = [];
+            $columns = $this->getOwnerRecord()?->columns ?? collect();
+            foreach ($columns as $col) {
+                $fieldKey = 'values.' . $col->key;
+                $label = $col->label ?? $col->key;
+                $inputType = $col->input_type ?? 'text';
+
+                switch ($inputType) {
+                    case 'chips':
+                        $component = Forms\Components\TagsInput::make($fieldKey)
+                            ->label($label)
+                            ->placeholder('Add and press enter');
+                        break;
+                    case 'textarea':
+                        $component = Forms\Components\Textarea::make($fieldKey)
+                            ->label($label)
+                            ->rows(3);
+                        break;
+                    case 'boolean':
+                        $component = Forms\Components\Toggle::make($fieldKey)
+                            ->label($label);
+                        break;
+                    default:
+                        $component = Forms\Components\TextInput::make($fieldKey)
+                            ->label($label);
+                        break;
+                }
+
+                $specific[] = $component;
+            }
         }
         return array_merge($base, $specific, [
             Forms\Components\TextInput::make('sort_order')->numeric()->default(0),

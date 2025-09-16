@@ -19,7 +19,6 @@ return new class extends Migration
                   ->comment('Foreign key ke tabel features');
             $table->string('name', 255)->comment('Nama condition/special case');
             $table->text('description')->nullable()->comment('Deskripsi condition');
-            $table->text('condition_text')->nullable()->comment('Detail kondisi/special case yang harus dipenuhi');
             $table->boolean('is_active')->default(true)->comment('Status aktif condition');
             $table->integer('sort_order')->default(0)->comment('Urutan tampilan condition');
             $table->timestamps();

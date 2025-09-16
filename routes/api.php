@@ -217,12 +217,12 @@ Route::middleware('auth:sanctum')->group(function () {
             // Search conditions
             $conditions = \App\Models\Condition::where(function ($query) use ($search) {
                     $query->where('name', 'like', "%{$search}%")
-                          ->orWhere('condition_text', 'like', "%{$search}%");
+                          ->orWhere('description', 'like', "%{$search}%");
                 })
                 ->with(['feature:id,name,sub_module_id', 'feature.subModule:id,name,main_module_id', 'feature.subModule.mainModule:id,name'])
                 ->active()
                 ->limit(5)
-                ->get(['id', 'name', 'condition_text', 'feature_id']);
+                ->get(['id', 'name', 'description', 'feature_id']);
             
             $results = [
                 'main_modules' => $mainModules,

@@ -22,7 +22,6 @@ class Condition extends Model
         'feature_id',
         'name',
         'description',
-        'condition_text',
         'is_active',
         'sort_order'
     ];
@@ -130,11 +129,4 @@ class Condition extends Model
         return $this->name;
     }
 
-    /**
-     * Accessor untuk mendapatkan condition text yang sudah diformat
-     */
-    public function getFormattedConditionTextAttribute()
-    {
-        return $this->condition_text ? nl2br(e($this->condition_text)) : '';
-    }
 }
