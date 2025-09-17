@@ -5,6 +5,194 @@ info:
 servers:
   - url: http://127.0.0.1:8000
 paths:
+  /api/clients:
+    get:
+      summary: Tampilkan semua client
+      responses:
+        '200':
+          description: Operasi berhasil. Mengembalikan daftar client.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+    post:
+      summary: Buat client baru
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company:
+                  type: string
+                location:
+                  type: string
+                badanUsaha:
+                  type: string
+                picName:
+                  type: string
+                position:
+                  type: string
+      responses:
+        '201':
+          description: Client berhasil dibuat.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+  /api/projects:
+    get:
+      summary: Tampilkan semua project
+      responses:
+        '200':
+          description: Operasi berhasil. Mengembalikan daftar project.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+    post:
+      summary: Buat project baru
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectFormData'
+      responses:
+        '201':
+          description: Project berhasil dibuat.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+  /api/projects/{id}:
+    get:
+      summary: Tampilkan detail project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Operasi berhasil.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+    put:
+      summary: Update project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectFormData'
+      responses:
+        '200':
+          description: Project berhasil diupdate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+    delete:
+      summary: Hapus project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Project berhasil dihapus.
+  /api/proposals:
+    get:
+      summary: Tampilkan semua proposal
+      responses:
+        '200':
+          description: Operasi berhasil. Mengembalikan daftar proposal.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Proposal'
+    post:
+      summary: Buat proposal baru
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProposalFormData'
+      responses:
+        '201':
+          description: Proposal berhasil dibuat.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proposal'
+  /api/proposals/{id}:
+    get:
+      summary: Tampilkan detail proposal
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Operasi berhasil.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proposal'
+    put:
+      summary: Update proposal
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProposalFormData'
+      responses:
+        '200':
+          description: Proposal berhasil diupdate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proposal'
+    delete:
+      summary: Hapus proposal
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Proposal berhasil dihapus.
   /api/proposal/templates:
     get:
       summary: Get active proposal templates (complex + simple)
@@ -85,6 +273,109 @@ paths:
           description: Created
 components:
   schemas:
+    Client:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID unik untuk client.
+          example: 1
+        company:
+          type: string
+          description: Nama perusahaan client.
+          example: PT. Jaya Abadi
+        location:
+          type: string
+          description: Lokasi atau kota client.
+          example: Jakarta
+        badanUsaha:
+          type: string
+          description: Bentuk badan usaha (PT, CV, dll).
+          example: PT
+        picName:
+          type: string
+          description: Nama Person in Charge (PIC).
+          example: Budi Santoso
+        position:
+          type: string
+          description: Jabatan PIC.
+          example: Manager IT
+        created_at:
+          type: string
+          format: date-time
+          description: Waktu pembuatan record.
+        updated_at:
+          type: string
+          format: date-time
+          description: Waktu update record terakhir.
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+        client_id:
+          type: integer
+        name:
+          type: string
+        analyst:
+          type: string
+        grade:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    ProjectFormData:
+      type: object
+      required:
+        - client_id
+        - name
+        - analyst
+        - grade
+      properties:
+        client_id:
+          type: integer
+        name:
+          type: string
+        analyst:
+          type: string
+        grade:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+    Proposal:
+      type: object
+      properties:
+        id:
+          type: integer
+        project_id:
+          type: integer
+        version:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    ProposalFormData:
+      type: object
+      required:
+        - project_id
+        - version
+      properties:
+        project_id:
+          type: integer
+        version:
+          type: string
     TemplateResponse:
       type: object
       properties:
@@ -156,4 +447,3 @@ components:
         termsAndConditions:
           type: array
           items: { type: string }
-
